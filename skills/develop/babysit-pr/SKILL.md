@@ -1,11 +1,11 @@
 ---
 name: babysit-pr
-description: Monitor, fix, and finish a GitHub pull request.
+description: Create, monitor, fix, and finish a GitHub pull request.
 ---
 
 # Babysit a pull request
 
-Own the pull request until it is ready or merged. Fix problems instead of only reporting them.
+Apply this skill when opening a pull request and when babysitting an existing one. Own the pull request until it is ready or merged. Fix problems instead of only reporting them.
 
 ## Write clearly
 
@@ -40,12 +40,14 @@ Use the `unslop` skill and ASD-STE100 Simplified Technical English for updates, 
 11. Reply to each finding and resolve completed threads.
 12. Poll until required checks finish.
 
-## Maintain the pull request body
+## Create and update the pull request body
+
+The body format below is mandatory for the initial `gh pr create` and every subsequent body update, including `gh pr edit`. Check all six requirements before publishing the body. Do not defer them until review or babysitting.
 
 - Rewrite the complete pull request body after the implementation and review fixes are stable. Do not append a partial note to an obsolete body.
 - Never delete or overwrite pull request content added by a person or bot. Preserve all external additions verbatim.
 
-Use this model:
+Required body format:
 
 1. Start with two or three plain sentences.
 2. Explain why the change was needed.
