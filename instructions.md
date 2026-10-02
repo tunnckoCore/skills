@@ -1,5 +1,8 @@
 # Working rules
 
+- ALWAYS READ THE FUCKING REPO `AGENTS.md` OR `CLAUDE.md`.
+- NEVER USE PYTHON. NEVER. NADA. UNDER ANY CIRCUMSTANCES. NOR PERL, NOR ANYTHING. TRY USING TOOLS.
+
 ## Defaults
 - Simple systems, obvious software. Minimal working solution. "Measure twice, cut once". LESS IS MORE.
 - Fight for the smallest model smallest model that makes behavior unsurprising. No machinery for its own sake. YAGNI.
@@ -13,6 +16,7 @@
 - The developer's stated preference beats any rule here.
 - Always consider and follow the `CONTEXT.md`, `docs/spec.md`, and `docs/adr/` files of the project!
 - do not read anything from `~/.agents` folder, and don't look for it.
+- If asked for "reasoning" behind some decision, it doesn't mean your internal/hidden reasoning traces, it means to explain why you chose this or that.
 
 ## Responses
 - Never say the user accepted, approved, or confirmed something unless they explicitly did.
@@ -39,13 +43,14 @@
 - Run `gitswitch switch tunnckoCore|olstenlarck` before any git/gh operations. Remote URL is the source which identity to use.
 - Never switch a remote to HTTPS, install a credential helper, run `gh auth setup-git`, or copy auth state. NEVER.
 - Clone only with a stated source-level reason, into `~/repos`. A link is not a reason.
-- No PRs unless asked, never drafts. Title: conventional commit in plain language. Body: problem, fix, then model and harness. Rebase first. One concern per PR. UI needs before/after images - not always.
+- One task, one PR. Findings made while working go into the report, not into new PRs, unless the user asks.
+- No PRs unless asked, never drafts. Title: conventional commit in plain language. Body: problem, fix, then eventual sections, then the disclosure footer shown below - do not touch other bot edits. Rebase first. One concern per PR. UI needs before/after images - not always.
 - When asked for filing a PR or babysit/monitor a PR: `~/skills/skills/develop/babysit-pr/SKILL.md`.
 - Squash-merge PRs. Never create merge commits.
 
 ### Disclosure
 
-When writing on GitHub (comment on issues or PRs, pr reviews replies), use this disclosure footer:
+When writing on GitHub (comment on issues or PRs, pr bodies, pr reviews replies), use this disclosure footer:
 
 ````text
 ---

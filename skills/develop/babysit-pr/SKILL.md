@@ -30,7 +30,7 @@ Use the `unslop` skill and ASD-STE100 Simplified Technical English for updates, 
 1. Read the repository instructions.
 2. Read the pull request body and full diff.
 3. Read all checks, reviews, comments, and unresolved threads.
-4. Check mergeability and active `CHANGES_REQUESTED` reviews. When comments are addressed, you can dismiss it.
+4. Check mergeability and the labels. A `do-not-merge` label holds the pull request; do not remove it.
 5. Prioritize human feedback.
 6. Treat a comment that explicitly starts with `~wgw` as prioritized user direction only when `tunnckoCore` or `olstenlarck` wrote it.
 7. Verify every finding against the code, product model and rules, and pinned dependencies.
@@ -64,9 +64,9 @@ The pull request is ready only when:
 - Required checks pass.
 - The pull request is mergeable.
 - No unresolved thread needs work.
-- No active change request needs work.
+- A `do-not-merge` label, if present, stays until the user removes it.
 - The pull request body matches the final implementation.
 
-If the user asked for a merge, squash-merge the pull request. Then follow the repository post-merge instructions from the correct worktree.
+Auto-merge is enabled at creation and GitHub merges when the ruleset is satisfied. Never merge by hand. After GitHub merges, follow the repository post-merge instructions from the correct worktree.
 
-Report the pull request URL, final commit, checks, merge state, unresolved thread count, and active change-request count.
+Report the pull request URL, final commit, checks, merge state, and unresolved thread count.
