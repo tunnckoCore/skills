@@ -77,7 +77,7 @@ Severity:
 - BLOCKER: the intended case is wrong
 - SHOULD: a real bug that callers will hit, inside the intent
 - NIT: everything else, including other paths, rare cases, small perf costs, and extra compatibility
-- A security or data-loss bug in the change is never a NIT, even on a rare path
+- A security, data-loss, or outage bug in the change is never a NIT, even on a rare path
 
 Reply format:
 VERDICT: APPROVE | CHANGES
@@ -87,7 +87,7 @@ S1 [BLOCKER|SHOULD|NIT] <file>:<line> <claim>. Fix: <suggestion>
 
 ## 3. Answer findings
 
-Check each finding and its severity yourself. A finding about another path, a rare case, or a small cost is a `NIT`, whatever label it came with, unless it is a security or data-loss bug in the change.
+Check each finding and its severity yourself. A finding about another path, a rare case, or a small cost is a `NIT`, whatever label it came with, unless it is a security, data-loss, or outage bug in the change.
 
 - Agree: make the smallest fix. Prefer deleting or narrowing code over a new lock, cache, helper, or option. Fix the case that happened. Add one focused test that fails without the fix, if the intent needs it.
 - Disagree: say why, with evidence (file:line, test, output).

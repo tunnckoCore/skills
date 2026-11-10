@@ -262,7 +262,7 @@ class Watcher:
         self.printed: set[str] = set()
         self.events = 0
         self.required: set[str] | None = None
-        self.prev_snapshot: list[tuple[str, str]] | None = None
+        self.prev_snapshot: tuple[str, list[tuple[str, str]]] | None = None
         self.pr_files: dict[str, set[str]] = {}
 
     def load(self) -> Json | None:
@@ -384,8 +384,8 @@ class Watcher:
         gate_done = all(bucket(n) != "pending" for n in gate)
         all_done = gate_done and all(c["bucket"] != "pending" for c in watched.values())
         # Checks appear a few seconds after a push. Two identical polls in a row
-        # guard against calling a half-registered set of checks finished.
-        snapshot = sorted((name, c["bucket"]) for name, c in watched.items())
+        # on the same head guard against calling a half-registered set finished.
+        snapshot = (head, sorted((name, c["bucket"]) for name, c in watched.items()))
         stable = snapshot == self.prev_snapshot
         self.prev_snapshot = snapshot
         green = gate_done and stable and not fail_lines
