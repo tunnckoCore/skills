@@ -106,15 +106,17 @@ Start one only if budget remains and a `BLOCKER` or `SHOULD` is open, behavior c
 
 Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. If you push to a PR, add this line to the end of the PR body:
 
-`Reviewed with full-review: <N> rounds with <Model>. Verdict: approved.`
+`Reviewed with full-review: <N> rounds with <Model>. Verdict: approved.` 
 
 Add `on <effort>` only if you verified the effort.
 
 Report:
 
+```markdown
 - **Rounds:** the count and the Model.
 - **Changes:** what the Model made you change.
 - **Diff size:** before and after.
 - **Findings:** fixed and declined, with reasons.
 - **Usage:** as reported, or say that the Model did not report it.
 - **Pushed:** yes or no.
+```
