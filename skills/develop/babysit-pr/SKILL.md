@@ -9,7 +9,9 @@ Own the PR until it merges or is ready. Fix problems instead of only reporting t
 
 ## Start
 
-When the user says "babysit", launch a new T3 Code thread on the PR's worktree with Claude Opus 5.5, medium effort, fast mode. That thread babysits only this PR, never follow-up ones, and sends its final report to the thread that called it.
+When the user says "babysit" and T3 Code is available, launch a new T3 Code thread on the PR's worktree with Claude Opus 5.5, medium effort, fast mode. That thread babysits only this PR, never follow-up ones, and sends its final report to the thread that called it.
+
+When T3 Code is unavailable, run this workflow in the current environment on the PR's worktree.
 
 1. Read the repository instructions.
 2. Read the PR body and the full diff.
