@@ -42,7 +42,7 @@ pr-wait <pr> [--repo owner/name] [--until ready|green|any-change]
 
 It prints one line per real event. It exits 0 when the `--until` condition is met or the PR merges, 1 when it needs you (a required check failed, conflicts, unresolved threads, PR closed), and 2 on bad input.
 
-- `ready` (default): required checks green, a review bot reviewed the head, and no unresolved threads.
+- `ready` (default): required checks green, every other CI check passed, a review bot reviewed the head, and no unresolved threads.
 - `green`: required checks only. Use it when the repo has no review bot that `pr-wait` knows.
 - `any-change`: exit on the first event.
 

@@ -99,7 +99,9 @@ Right before the merge, run `git fetch` and check the PR again. Never merge
 when it is BEHIND or DIRTY, or when base commits that landed after the last
 green run touch this PR's files. Rebase, push, and wait for green again.
 
-Squash-merge with `gh pr merge --squash`. Never create merge commits. If the
+Squash-merge with `gh pr merge --squash --match-head-commit <sha>`, where
+`<sha>` is the head that passed the merge gate. If the head moved, check the
+gate again. Never create merge commits. If the
 repo uses a merge queue, stay until GitHub reports the PR as merged. Merge
 through branch protection as configured. Never use `--admin` or other bypasses. You can ignore automated reviews that request "needs human
 review" if you have high confidence in your changes.

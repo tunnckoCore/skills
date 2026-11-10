@@ -77,6 +77,7 @@ Severity:
 - BLOCKER: the intended case is wrong
 - SHOULD: a real bug that callers will hit, inside the intent
 - NIT: everything else, including other paths, rare cases, small perf costs, and extra compatibility
+- A security or data-loss bug in the change is never a NIT, even on a rare path
 
 Reply format:
 VERDICT: APPROVE | CHANGES
@@ -86,7 +87,7 @@ S1 [BLOCKER|SHOULD|NIT] <file>:<line> <claim>. Fix: <suggestion>
 
 ## 3. Answer findings
 
-Check each finding and its severity yourself. A finding about another path, a rare case, or a small cost is a `NIT`, whatever label it came with.
+Check each finding and its severity yourself. A finding about another path, a rare case, or a small cost is a `NIT`, whatever label it came with, unless it is a security or data-loss bug in the change.
 
 - Agree: make the smallest fix. Prefer deleting or narrowing code over a new lock, cache, helper, or option. Fix the case that happened. Add one focused test that fails without the fix, if the intent needs it.
 - Disagree: say why, with evidence (file:line, test, output).
@@ -100,7 +101,7 @@ Start one only if budget remains and a `BLOCKER` or `SHOULD` is open, behavior c
 
 ## 5. Stop and ship
 
-- Agreed: the Model approves the current behavior diff, no `BLOCKER` or `SHOULD` is open, and you have no concern of your own.
+- Agreed: the Model approves the current behavior diff, or returns only `NIT` findings on it. No `BLOCKER` or `SHOULD` is open, and you have no concern of your own.
 - Stuck: an item stays disputed after two replies, or the budget ends. Show both sides in two or three lines each. The user decides. The end of the budget is not approval.
 
 Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. If you push to a PR, add this line to the end of the PR body:

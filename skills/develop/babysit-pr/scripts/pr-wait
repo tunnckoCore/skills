@@ -12,15 +12,17 @@ Progress and errors that do not end the run go to stderr.
 --until
   green       required checks passed on the current head (every CI check when
               the base branch requires none)
-  ready      green, Greptile or Macroscope reviewed the current head, and no
-              review thread is unresolved (default)
+  ready       green, every other CI check passed, Greptile or Macroscope
+              reviewed the current head, and no review thread is unresolved
+              (default)
   any-change  stop after the first poll that prints an event
 
 Exit codes
   0  the --until condition is met, or the PR merged
   1  the condition cannot be met without action: a required check failed, the
      branch conflicts with its base, the PR closed, `ready` is blocked by
-     unresolved threads or a BEHIND branch, or GitHub stayed unreachable
+     a failed CI check, unresolved threads, or a BEHIND branch, or GitHub
+     stayed unreachable
   2  bad arguments, unknown PR, or another pr-wait already watches this PR
 
 Events
@@ -92,6 +94,7 @@ query($owner: String!, $name: String!, $number: Int!) {
         nodes { id url state body commit { oid } author { login __typename } }
       }
       reviewThreads(last: 100) {
+        totalCount
         nodes {
           isResolved path line
           comments(first: 100) { nodes { id url body author { login __typename } } }
@@ -378,7 +381,7 @@ class Watcher:
                 fail_lines.append(f"{label} failed: {name} {link}")
                 self.emit(f"fail:{head}:{name}:{link}", fail_lines[-1])
         watched = {name: c for name, c in checks.items() if bot_name(name) not in ADVISORY_BOTS}
-        gate_done = bool(gate) and all(bucket(n) != "pending" for n in gate)
+        gate_done = all(bucket(n) != "pending" for n in gate)
         all_done = gate_done and all(c["bucket"] != "pending" for c in watched.values())
         # Checks appear a few seconds after a push. Two identical polls in a row
         # guard against calling a half-registered set of checks finished.
@@ -412,6 +415,9 @@ class Watcher:
                     continue
                 kind = "new thread" if index == 0 else "thread reply"
                 self.emit(f"c:{comment['id']}", f"{kind} from {login} on {where}: {snippet(comment['body'])} {comment['url']}")
+        # Only the newest 100 threads are fetched. Older ones may be unresolved.
+        if pr["reviewThreads"]["totalCount"] > len(threads):
+            unresolved.append(f"{pr['url']} (over {len(threads)} threads, check the older ones)")
 
         # Review bots on the current head. A bot with checks is done when they
         # finish. Otherwise it is done once it reviews the head commit or its
@@ -505,7 +511,9 @@ class Watcher:
                 self.reported.add(checks_key)
                 self.finish(0, [f"green on {short}: {summary}{self.behind(base, base_oid, head)}"])
             # ready waits for Greptile or Macroscope, never for CodeRabbit.
-            if green and reviewed:
+            if green and all_done and reviewed:
+                if failed_names:
+                    self.finish(1, [f"checks failed on {short}: {', '.join(failed_names)}"])
                 if unresolved:
                     self.finish(1, [f"blocked by {len(unresolved)} unresolved threads on {short}: {' '.join(unresolved)}"])
                 if merge_state == "BEHIND":
