@@ -68,6 +68,7 @@ Find:
 - bugs
 - broken callers
 - mismatches with the intent
+- docs, glossary, or ADRs that the change made out of date (`SHOULD`)
 - code, tests, or guards that the intent does not need
 - likely `BLOCKER` or `SHOULD` bugs: swallowed errors, unhandled async rejection or cancellation, unvalidated input, secrets in code, string-built SQL, path traversal, missing auth checks
 

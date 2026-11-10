@@ -45,6 +45,7 @@ one appears.
 1. **Finish the change.** Complete the goal from the user's request with the
    smallest change that works. Fix the case that happened, not every case
    that could. If you are on the default branch, create a branch first.
+   Update the docs with the `full-docs` skill.
 2. **Prove it.** Get proof for every change you made. See "Proof".
 3. **Get feedback.** Use the `full-review` skill to verify changes.
 4. **File the PR** with the `file-pr` skill. Rebase onto the latest default
