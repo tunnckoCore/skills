@@ -5,12 +5,12 @@ description: File a pull request. Use when the user asks to file, open, or creat
 
 # File PR
 
-Use the `prs-and-comments` skill for the title, the body, and the disclosure.
+Use the `full-comms` skill for the title, the body, and the disclosure.
 
 1. Check whether a PR for this branch already exists. If one does, update it. Do not open a second PR.
 2. Rebase onto the latest default branch.
 3. Review the diff against the base branch, usually `origin/master`, and confirm that it matches the goal. One PR holds one concern.
-4. Write the title and body with `prs-and-comments`.
+4. Write the title and body with `full-comms`.
 5. Open a real PR, not a draft, so review bots run.
 6. Do not turn on auto-merge, and do not merge. Auto-merge is off on all repos. Only the `full-send` skill merges.
 

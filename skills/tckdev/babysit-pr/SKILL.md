@@ -5,7 +5,7 @@ description: Monitor, fix, and finish an open GitHub pull request. Use when the 
 
 # Babysit PR
 
-Own the PR until it merges or is ready. Fix problems instead of only reporting them. Use the `prs-and-comments` skill for every comment, reply, body update, and report.
+Own the PR until it merges or is ready. Fix problems instead of only reporting them. Use the `full-comms` skill for every comment, reply, body update, and report.
 
 ## Start
 

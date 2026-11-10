@@ -1,9 +1,9 @@
 ---
-name: prs-and-comments
+name: full-comms
 description: The disclosure, writing style, and formats for everything you write on GitHub. Use whenever you write a PR title, PR body, comment, or review reply.
 ---
 
-# PRs and comments
+# Full comms
 
 These rules apply to everything you write on GitHub for the user: PR titles and bodies, top-level comments, inline review comments, replies to bots or reviewers, and the reasons you give before you resolve or dismiss feedback.
 
