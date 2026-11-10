@@ -92,7 +92,7 @@ The PR is ready only when:
 
 Stop and report once:
 
-- **Ready, held by `do-not-merge`:** call `unwatch_pull_request`, report that the label is the only blocker, and end the turn.
+- **Ready, held by `do-not-merge`:** in T3 Code, call `unwatch_pull_request`. Elsewhere, stop the `pr-wait` process if it is still running and ensure it has exited. Report that the label is the only blocker, and end the turn.
 - **Merged:** the watch ends on its own. Report the merge commit.
 - **Idle:** after one hour without a new event, call `unwatch_pull_request`, report what is still open, and end the turn.
 
