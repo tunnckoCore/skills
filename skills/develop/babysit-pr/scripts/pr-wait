@@ -436,9 +436,9 @@ class Watcher:
             key = f"bot:{bot}:{head}"
             was_done = key in self.reported
             if done:
-                if bot in GATING_BOTS:
-                    reviewed.append(bot)
                 failed = [name for name, c in own_checks.items() if c["bucket"] in FAILED]
+                if bot in GATING_BOTS and not failed:
+                    reviewed.append(bot)
                 detail = "; ".join(filter(None, [
                     next((v for v in map(verdict, (s["body"] for s in summaries)) if v), ""),
                     f"failed: {', '.join(failed)}" if failed else "",
