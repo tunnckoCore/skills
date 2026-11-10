@@ -12,7 +12,7 @@ Use the `prs-and-comments` skill for the title, the body, and the disclosure.
 3. Review the diff against the base branch, usually `origin/master`, and confirm that it matches the goal. One PR holds one concern.
 4. Write the title and body with `prs-and-comments`.
 5. Open a real PR, not a draft, so review bots run.
-6. Turn on squash auto-merge when you create the PR, if the repo allows it. GitHub merges it when the ruleset is satisfied. Never merge by hand.
+6. Do not turn on auto-merge, and do not merge. Auto-merge is off on all repos. Only the `full-send` skill merges.
 
 If `gh pr create` fails because the GraphQL rate limit is used up, open the PR through REST:
 

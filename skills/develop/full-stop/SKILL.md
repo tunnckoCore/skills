@@ -22,9 +22,9 @@ You may commit, push, rebase, fix conflicts, and use `--force-with-lease` on
 this task's branch. Never merge, enable auto-merge, enter a merge queue, push
 to the default branch, bypass branch protection, or delegate those actions.
 
-Disable existing auto-merge and remove the PR from any merge queue before
-work begins; check again before each push. Report these changes. If you
-cannot prevent automatic merging, report the blocker before proceeding.
+Auto-merge is off on all repos. If it is on for this PR anyway, or the PR is
+in a merge queue, turn it off or remove it before work begins, and report it.
+If you cannot prevent automatic merging, report the blocker before proceeding.
 
 ## Stop at the gate
 

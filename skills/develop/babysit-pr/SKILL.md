@@ -75,9 +75,9 @@ If another PR makes this one obsolete, stop the watcher, report it to the user, 
 
 ## Merging
 
-Auto-merge is on for the PR and in the repo settings. GitHub squash-merges the PR when the ruleset is satisfied. Never merge by hand, unless the `full-send` skill runs. The `full-stop` skill turns off auto-merge for that PR.
+Babysit never merges. Auto-merge is off on all repos, so nothing merges on its own. Only the `full-send` skill merges, by hand, when its merge gate passes. The `full-stop` skill stops at ready.
 
-Before a `full-send` merge, run `git fetch` and check the PR again. Never merge when it is BEHIND or DIRTY, or when base commits that landed after the last green run touch this PR's files. Rebase, push, and wait for green again.
+A `do-not-merge` label makes a required check fail, so it holds the merge. Never remove it.
 
 ## Finish
 
@@ -92,8 +92,8 @@ The PR is ready only when:
 
 Stop and report once:
 
-- **Ready, held by `do-not-merge`:** in T3 Code, call `unwatch_pull_request`. Elsewhere, stop the `pr-wait` process if it is still running and ensure it has exited. Report that the label is the only blocker, and end the turn.
-- **Merged:** the watch ends on its own. Report the merge commit.
+- **Ready:** in T3 Code, call `unwatch_pull_request`. Elsewhere, stop the `pr-wait` process if it is still running and ensure it has exited. Report, and end the turn. If the `do-not-merge` label is the only blocker, say so.
+- **Merged by someone else:** the watch ends on its own. Report the merge commit.
 - **Idle:** if `full-send` is not running, after one hour without a new event, call `unwatch_pull_request`, report what is still open, and end the turn.
 
 Report:

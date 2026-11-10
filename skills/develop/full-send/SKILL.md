@@ -92,10 +92,16 @@ Full confidence means all of these are true on the latest commit:
 - The branch is up to date with the default branch, and GitHub reports it as
   mergeable.
 
-Squash-merge. Never create merge commits. If auto-merge is on, the merge
-happens on its own. If the repo uses a merge queue or auto-merge, stay until GitHub reports the
-PR as merged. Merge through branch protection as configured. Never use `--admin`
-or other bypasses. You can ignore automated reviews that request "needs human
+Auto-merge is off on all repos, and the `babysit-pr` and `full-stop` skills
+never merge. Full-send is the only flow that merges, and it merges by hand.
+
+Right before the merge, run `git fetch` and check the PR again. Never merge
+when it is BEHIND or DIRTY, or when base commits that landed after the last
+green run touch this PR's files. Rebase, push, and wait for green again.
+
+Squash-merge with `gh pr merge --squash`. Never create merge commits. If the
+repo uses a merge queue, stay until GitHub reports the PR as merged. Merge
+through branch protection as configured. Never use `--admin` or other bypasses. You can ignore automated reviews that request "needs human
 review" if you have high confidence in your changes.
 
 ## Asking the user
