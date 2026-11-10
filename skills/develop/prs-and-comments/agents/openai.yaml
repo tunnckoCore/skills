@@ -1,0 +1,4 @@
+interface:
+  display_name: "PRs and Comments"
+  short_description: "Disclosure, style, and formats for GitHub writing"
+  default_prompt: "Use $prs-and-comments for everything you write on GitHub."

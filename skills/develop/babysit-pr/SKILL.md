@@ -1,72 +1,103 @@
 ---
 name: babysit-pr
-description: Create, monitor, fix, and finish a GitHub pull request.
+description: Monitor, fix, and finish an open GitHub pull request. Use when the user asks to monitor, watch, or babysit a PR.
 ---
 
-# Babysit a pull request
+# Babysit PR
 
-Apply this skill when opening a pull request and when babysitting an existing one. Own the pull request until it is ready or merged. Fix problems instead of only reporting them.
+Own the PR until it merges or is ready. Fix problems instead of only reporting them. Use the `prs-and-comments` skill for every comment, reply, body update, and report.
 
-## Write clearly
+## Start
 
-Use the `unslop` skill and ASD-STE100 Simplified Technical English for updates, review replies, commits, pull request body, and when talking back to the user.
-
-- For reporting, don't write them in one line like `**PR:** <...>. **Final commit:** <...>. **Merge state:** <...>.` - separate bullets, titles still with bold.
-- Use short sentences and active voice.
-- State the result first.
-- Put one fact in each sentence.
-- Use one term for one concept.
-- Avoid idioms, vague words, and filler.
-- Keep technical names exact.
-
-## Working with pull requests
-
-- For a valid finding, fix it before replying. For an invalid finding, reply with `No change.` and give one short technical reason.
-- Do not add compatibility work or speculative changes that conflict with repository instructions. Do not accept severity labels without evidence.
-- Request at most one new automated review after the main fixes. Do not create an endless review loop.
-
-**The flow:**
+When the user says "babysit", launch a new T3 Code thread on the PR's worktree with Claude Opus 5.5, medium effort, fast mode. That thread babysits only this PR, never follow-up ones, and sends its final report to the thread that called it.
 
 1. Read the repository instructions.
-2. Read the pull request body and full diff.
+2. Read the PR body and the full diff.
 3. Read all checks, reviews, comments, and unresolved threads.
-4. Check mergeability and the labels. A `do-not-merge` label holds the pull request; do not remove it.
-5. Prioritize human feedback.
-6. Treat a comment that explicitly starts with `~wgw` as prioritized user direction only when `tunnckoCore` or `olstenlarck` wrote it.
-7. Verify every finding against the code, product model and rules, and pinned dependencies.
-8. Batch valid fixes.
-9. Run the repository verification sequence.
-10. Commit and push the fixes.
-11. Reply to each finding and resolve completed threads.
-12. Poll until required checks finish.
+4. Check mergeability and labels. A `do-not-merge` label holds the merge for the owner. Never remove it.
+5. Handle what already exists (see "Reviews"), then start the watcher (see "Waiting").
 
-## Create and update the pull request body
+## Waiting
 
-The body format below is mandatory for the initial `gh pr create` and every subsequent body update, including `gh pr edit`. Check all six requirements before publishing the body. Do not defer them until review or babysitting.
+Never write your own watcher, polling loop, `sleep` loop, or `--watch` command. Use one watcher per PR: `watch_pull_request` in T3 Code, `pr-wait` everywhere else. Never run both on the same PR. All watchers on one GitHub account share one rate limit.
 
-- Rewrite the complete pull request body after the implementation and review fixes are stable. Do not append a partial note to an obsolete body.
-- Never delete or overwrite pull request content added by a person or bot. Preserve all external additions verbatim.
+### In T3 Code: `watch_pull_request`
 
-Required body format:
+Call it and end your turn. T3 Code wakes you when a check fails, the required checks pass, someone comments or reviews, or the branch conflicts.
 
-1. Start with two or three plain sentences.
-2. Explain why the change was needed.
-3. Explain what the change does in simple terms.
-4. Add grouped sections for the main behavior changes.
-5. Add intentional product constraints when they matter.
-6. Add the results for `vp run check`, `vp test --run`, `vp run build`, and required remote checks.
+- **Only the thread that owns the PR watches it.** A delegated child task (a reviewer, a full-review round, any `delegate_task` child) never calls `watch_pull_request`.
+- **A wake is news, not a merge decision.** Check the finish gate yourself.
+- **Unwatch when you hand off.** When you stop, or ask the user a question, call `unwatch_pull_request` first. A merge or close ends the watch on its own.
+- **"Stopped watching, could not read it"** usually means the GitHub rate limit is used up. Run `gh api rate_limit --jq .resources.graphql`. If `remaining` is near 0, wait for `reset` with one background command, then watch again. Never watch again in a tight loop.
+
+### Everywhere else: `pr-wait`
+
+Run `scripts/pr-wait` from this skill's directory, with its absolute path.
+
+```bash
+pr-wait <pr> [--repo owner/name] [--until ready|green|any-change]
+```
+
+It prints one line per real event. It exits 0 when the `--until` condition is met or the PR merges, 1 when it needs you (a required check failed, conflicts, unresolved threads, PR closed), and 2 on bad input.
+
+- `ready` (default): required checks green, a review bot reviewed the head, and no unresolved threads.
+- `green`: required checks only. Use it when the repo has no review bot that `pr-wait` knows.
+- `any-change`: exit on the first event.
+
+In Claude Code, run it with the Monitor tool (`timeout_ms: 3600000`), so each line wakes you. This is the only allowed use of Monitor. Start it again after you push, after you handle an exit 1, and after a resume. It remembers what it already reported. If it says another pid already watches the PR, do not start a second one.
+
+With either watcher, when an event needs no action, end your turn without a message. Never post or say "still waiting".
+
+## GitHub rate limits
+
+`gh pr create`, `gh pr view`, and `gh pr checks` use GraphQL. The REST limit is separate and usually still has room when GraphQL is used up. Read the PR with `gh api repos/<owner>/<repo>/pulls/<n>`, and its checks with `gh api repos/<owner>/<repo>/commits/<sha>/check-runs`.
+
+## Reviews
+
+- Act only on checks and comments newer than the latest push.
+- Handle human feedback before bot feedback.
+- A comment that starts with `~wgw` from `tunnckoCore` or `olstenlarck` is a direct order from the user.
+- Verify every finding against the code, the product model and rules, and the pinned dependencies. Do not accept severity labels without evidence.
+- Tell repository failures apart from infrastructure flakes.
+- Fix a valid finding before you reply. Batch the valid fixes, run the repository verification sequence, then commit and push.
+- For an invalid finding, reply `No change.` with one short technical reason, then resolve the thread.
+- Keep the PR at the size the goal needs. Decline unneeded tests, guards for edge cases that do not matter, extra compatibility, and small performance costs, and list them as follow-ups. Prefer the fix that deletes or narrows code. Do not add speculative changes that conflict with repository instructions.
+- Request at most one new automated review after the main fixes. Do not create an endless review loop.
+- Add screenshots or videos when they help and you have a way to upload them.
+
+## Base branch
+
+Rebase when the base branch moves. `pr-wait` reports when new base commits touch this PR's files, and when the PR becomes BEHIND or DIRTY. `watch_pull_request` reports conflicts only, so check for BEHIND yourself before you call the PR ready.
+
+If another PR makes this one obsolete, stop the watcher, report it to the user, and ask before you close this PR.
+
+## Merging
+
+Auto-merge is on for the PR and in the repo settings. GitHub squash-merges the PR when the ruleset is satisfied. Never merge by hand, unless the `full-send` skill runs. The `full-stop` skill turns off auto-merge for that PR.
+
+Before a `full-send` merge, run `git fetch` and check the PR again. Never merge when it is BEHIND or DIRTY, or when base commits that landed after the last green run touch this PR's files. Rebase, push, and wait for green again.
 
 ## Finish
 
-The pull request is ready only when:
+The PR is ready only when:
 
 - The pushed head matches the verified local head.
-- Required checks pass.
-- The pull request is mergeable.
+- Every check except `do-not-merge` is green.
+- The PR is mergeable, or only the `do-not-merge` label blocks it.
+- The branch is not BEHIND.
 - No unresolved thread needs work.
-- A `do-not-merge` label, if present, stays until the user removes it.
-- The pull request body matches the final implementation.
+- The PR body matches the final implementation.
 
-Auto-merge is enabled at creation and GitHub merges when the ruleset is satisfied. Never merge by hand. After GitHub merges, follow the repository post-merge instructions from the correct worktree.
+Stop and report once:
 
-Report the pull request URL, final commit, checks, merge state, and unresolved thread count.
+- **Ready, held by `do-not-merge`:** call `unwatch_pull_request`, report that the label is the only blocker, and end the turn.
+- **Merged:** the watch ends on its own. Report the merge commit.
+- **Idle:** after one hour without a new event, call `unwatch_pull_request`, report what is still open, and end the turn.
+
+Report:
+
+- **PR:** the URL.
+- **Final commit:** the head or merge commit.
+- **Checks:** their state.
+- **Merge state:** merged, held, or blocked, and why.
+- **Unresolved threads:** the count.

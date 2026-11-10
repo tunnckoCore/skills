@@ -1,0 +1,4 @@
+interface:
+  display_name: "File PR"
+  short_description: "File a pull request with a clean title and body"
+  default_prompt: "Use $file-pr to file a pull request for this work."
