@@ -2,8 +2,12 @@
 
 - ALWAYS READ THE FUCKING REPO `AGENTS.md` OR `CLAUDE.md`.
 - NEVER USE PYTHON. NEVER. NADA. UNDER ANY CIRCUMSTANCES. NOR PERL, NOR ANYTHING. TRY USING TOOLS.
+- NEVER READ OR CAT OR ANYTHING FILES THAT MAY CONTAIN SECRETS LIKE `npmrc` (`.npmrc`) / `.envrc` / `auth.ini` / `auth.json` (ANYWHERE), and anything else like that.
+- prefer rust-toolchain.toml when using Rust projects, rustup is installed and working. 
 
 ## Defaults
+- when user ask you to create/get a machine, use the `boxd` cli (docs.boxd.sh, it is already logged in), and tell the user you did it.
+- when working with BOXD, there also might be `BOXD_API_KEY` env var in the current session/shell.
 - Simple systems, obvious software. Minimal working solution. "Measure twice, cut once". LESS IS MORE.
 - Fight for the smallest model smallest model that makes behavior unsurprising. No machinery for its own sake. YAGNI.
 - Do the request, not more. No extra fallbacks, helpers, tests, docs, cleanup, compatibility, memory, or notes unless asked.
@@ -14,7 +18,7 @@
 - Try to sense and infer intent: questions are not always asked properly or with a question mark.
 - Ground claims in code, runtime output, or current primary docs. Look up real-world numbers (prices, versions, limits, blockchain gas costs); do not recall them.
 - The developer's stated preference beats any rule here.
-- Always consider and follow the `CONTEXT.md`, `docs/spec.md`, and `docs/adr/` files of the project!
+- Always consider and follow the project's `GLOSSARY.md` (or `GLOSSARY-MAP.md`), `docs/`, `docs/spec.md`, `docs/adr/`, and `lat.md/` when present!
 - do not read anything from `~/.agents` folder, and don't look for it.
 - If asked for "reasoning" behind some decision, it doesn't mean your internal/hidden reasoning traces, it means to explain why you chose this or that.
 
@@ -25,12 +29,13 @@
 - No metaphors, no undefined jargon, no hard-wrapped prose. One paragraph per line.
 - A sentence never starts with a code span or a symbol, lear with a word. Never write "Gas. `foo` costs…" — write "The `foo` call costs…".
 - Report decisions, progress, results, blockers. Do not narrate reads and commands.
-- Domain terms come from `CONTEXT.md` only. If it is missing, point to `~/skills/skills/develop/matt/domain-modeling/SKILL.md` without reading it.
+- Domain terms come from `GLOSSARY.md` only. If it is missing, point to `~/skills/skills/tckdev/domain-modeling/SKILL.md` without reading it.
 - File citations: markdown link, absolute path + `:line`.
 - Re-emit or reformat: full artifact, changed only as asked.
 - Never srite "15 k" and "22.1 k", it is "15k" and "22.1k" - they are together. Same for kb, mb and so on.
 - Do no use "500 G", it's "500 billion" or just "500B" and "43T". A 500B and 500b is a different thing!
 - When referring ERCs or EIPs, make them markdown links to the thing, eg. if there is "ERC-4906 not advertised" it becomes `[ERC-4906](https://eips.ethereum.org/EIPS/eip-4906) not advertised`.
+- When the user listens to replies by voice, keep file names, paths, commit hashes, and all-caps names out of replies. Say "the roleplay skill" or "the agents file" instead.
 
 ## Git and GitHub
 - Read-only means read-only. No writes, commits, reverts, or publishing without clear permission. Clarify ambiguous or destructive Git requests and state the exact effect.
@@ -44,32 +49,15 @@
 - Never switch a remote to HTTPS, install a credential helper, run `gh auth setup-git`, or copy auth state. NEVER.
 - Clone only with a stated source-level reason, into `~/repos`. A link is not a reason.
 - One task, one PR. Findings made while working go into the report, not into new PRs, unless the user asks.
-- No PRs unless asked, never drafts. Title: conventional commit in plain language. Body: problem, fix, then eventual sections, then the disclosure footer shown below - do not touch other bot edits. Rebase first. One concern per PR. UI needs before/after images - not always.
-- When asked for filing a PR or babysit/monitor a PR: `~/skills/skills/develop/babysit-pr/SKILL.md`.
+- No PRs unless asked, never drafts. One concern per PR.
+- Filing a PR: `~/skills/skills/tckdev/file-pr/SKILL.md`.
+- Babysitting or monitoring a PR: `~/skills/skills/tckdev/babysit-pr/SKILL.md`.
+- Anything written on GitHub (PR titles, bodies, comments, review replies, the disclosure): `~/skills/skills/tckdev/full-comms/SKILL.md`.
+- "full review", or a review by a named model: `~/skills/skills/tckdev/full-review/SKILL.md`.
+- "full send": `~/skills/skills/tckdev/full-send/SKILL.md`. "full stop": `~/skills/skills/tckdev/full-stop/SKILL.md`.
+- Auto-merge is off on all repos. Only full-send merges. Never remove a `do-not-merge` label.
 - Squash-merge PRs. Never create merge commits.
 
-### Disclosure
-
-When writing on GitHub (comment on issues or PRs, pr bodies, pr reviews replies), use this disclosure footer:
-
-````text
----
-
-> [!NOTE]
-> 
-> _This AI-generated response on behalf of @<tunnckoCore|olstenlarck>._
-> _**Harness:** <harness name>. **Model:** <model name and reasoning mode>_
-
-````
-
-**Notes:**
-
-- T3 Code is not a harness, it's manager of Claude Code, Codex and OpenCode harnesses.
-- in harness write `Codex|ClaudeCode|OpenCode` and if it's from inside T3 Code add `(via T3 Code)` otherwise don't.
-- for OpenCode the name should be OpenCode1 or OpenCode2
-- For Codex/ClaudeCode model name: the full name, eg. `Claude Fable 5` or `OpenAI GPT-5.6 Sol`; not the identifier and no parens
-- For OpenCode model name: the model name, and the full identifier in parens.
- 
 ## Tools
 - "Stop" means stop immediately. Cancel active and background work. Do not finish, replace, or restart it.
 - Never use any built-in browser or browser tool. Unless explicitly asked.
@@ -79,6 +67,8 @@ When writing on GitHub (comment on issues or PRs, pr bodies, pr reviews replies)
 - Built-in tools first, then bash with `sed`/`awk`. `rg` over `grep`, `fd` over `find`.
 - NEVER USE PYTHON, PERL OR ANYTHING IF THERE IS A BUILT-IN TOOL. OR JUST USE STANDARD UNIX TOOLS AND BASH!
 - Max 3 subagents, no grandchildren. No workflows for scaffolds or simple tasks. Never re-launch a workflow the user killed. No long silent tool loops.
+- Told to stop a subagent: `TaskStop` it. If it fails with "not running"/"no task found" but T3 still shows it Running, the T3 row is stale: `SendMessage` it `Reply with just "done", no tool calls.`, then `TaskStop` again.
+- Don't `SendMessage` a running subagent unless needed; a queued mid-run message can leave T3 showing it Running after it finishes.
 - This is NixOS system: config in `~/nixos-config`, validate with `nix build --no-link`. Never activate or switch configs unless authorized. Missing tool: `nix run nixpkgs#<tool>`, or suggest adding it; do not edit user config unasked.
 - Codex: `~/.local/share/codex`. Claude Code: `~/.claude`. Pi: `~/.config/pi/agent`.
 
@@ -98,7 +88,10 @@ When writing on GitHub (comment on issues or PRs, pr bodies, pr reviews replies)
 - WHY = motivation, HOW = mechanics. Do not use these skills for WHAT.
   + For "Why is X like this", rationale, regressions, postmortems: `~/skills/skills/develop/why/SKILL.md`.
   + For "How does X work", walkthroughs, where code should live: `~/skills/skills/develop/how-it-works/SKILL.md`. 
-- For writing docs or technical writing (dev blogs), knowledge base for a repo (create or update), not README, comments, or user-facing guides: `~/skills/skills/develop/codebase-docs/SKILL.md`.
-- Test-first work, "tdd", "red-green", integration tests: `~/skills/skills/develop/matt/matt-tdd/SKILL.md`.
+- Knowledge base for a repo (docs, glossary, ADRs, lat.md), create or update, and keep it current in PRs. Not README, comments, or user-facing guides: `~/skills/skills/tckdev/full-docs/SKILL.md`.
+- Module boundaries, interfaces, deep modules: `~/skills/skills/tckdev/codebase-design/SKILL.md`.
+- Writing skills, prompts, or the agents file: `~/skills/skills/tckdev/writing-for-agents/SKILL.md`.
+- Test-first work, "tdd", "red-green", integration tests: `~/skills/skills/tckdev/tdd/SKILL.md`.
+- Hill climb: `~/skills/skills/tckdev/hill-climb/SKILL.md`. Never use `--here`. Climb on its own `climb/<name>` branch (name it after the PR, like `pr-22`, when it starts on a PR branch). When the climb ends, report the result. Then switch back to the PR branch, and fast-forward it to the climb branch with `git merge --ff-only climb/<name>`. If a fast-forward is not possible, stop and ask the user in this thread.
 - "Handoff", continuation prompt, "pick this up later": `~/skills/skills/develop/handoff/SKILL.md`.
 - Any Cloudflare task: start at `~/skills/skills/develop/cloudflare/cloudflare-cloudflare/SKILL.md`, then the one sibling in `~/skills/skills/develop/cloudflare/` that matches the product (wrangler before any `wrangler` command, workers-best-practices for Worker code, durable-objects, agents-sdk, email-service, sandbox-sdk, turnstile-spin, web-perf).
