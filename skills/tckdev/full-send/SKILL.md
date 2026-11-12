@@ -49,8 +49,8 @@ one appears.
    Update the docs with the `full-docs` skill.
 2. **Prove it.** Get proof for every change you made. See "Proof".
 3. **Get feedback.** Use the `full-review` skill to verify changes.
-4. **File the PR** with the `file-pr` skill. Give `full-comms` one short line
-   that says how you proved the change, for the PR body.
+4. **File the PR** with the `file-pr` skill. Add one short line to the PR
+   body that says how you proved the change.
 5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI
    failures. Get proof for each fix before you push it. When babysit reports
    ready, held, or idle, do not end the turn. Continue with the next step.
@@ -87,11 +87,11 @@ Full confidence means all of these are true on the latest commit:
 
 - Your proof covers every change in the diff.
 - The `babysit-pr` finish gate passes.
-- Each review finding is fixed, or dismissed with a written reason. A bot note
-  that only asks for human review gets `No change.` and one short reason, as
-  `full-comms` says. That note alone does not block the merge.
+- Each review finding is fixed, or dismissed with a written reason.
 - No human review still requests changes.
 - The PR has no `do-not-merge` label. Never remove it. If it is present, ask the user.
+- The branch is up to date with the default branch, and GitHub reports it as
+  mergeable.
 
 Auto-merge is off on all repos, and the `babysit-pr` and `full-stop` skills
 never merge. Full-send is the only flow that merges, and it merges by hand.
@@ -109,7 +109,8 @@ Squash-merge with `gh pr merge --squash --match-head-commit <sha>`, where
 `<sha>` is the head that passed the merge gate. If the head moved, check the
 gate again. Never create merge commits. Stay until GitHub reports the PR as
 merged. Merge through branch protection as configured. Never use `--admin` or
-other bypasses.
+other bypasses. You can ignore automated reviews that request "needs human
+review" if you have high confidence in your changes.
 
 ## Asking the user
 

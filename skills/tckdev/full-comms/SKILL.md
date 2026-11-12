@@ -76,7 +76,7 @@ GOOD
 
 > ✅ My "new worktree" default was ignored when starting new threads on existing worktrees. Super unintuitive. Now your preferences always apply.
 
-When you update the body, rewrite your own sections to match the final implementation. Do not append a partial note to an old body. Keep every part that a person or bot added, byte for byte. Put the lines that other skills give you, such as the proof line from `full-send` or the `full-review` line, in your own sections.
+When you update the body, rewrite your own sections to match the final implementation. Do not append a partial note to an old body. Keep every part that a person or bot added, byte for byte.
 
 ## Comments and review replies
 

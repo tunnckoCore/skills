@@ -34,7 +34,7 @@ Run `git status --short`. Do not stash, discard, or include unrelated changes. L
 
 Find the base after `git fetch origin`:
 
-- PR: `gh pr view <n> --json baseRefName,headRefOid`. Check out the branch only if the working tree is clean. Confirm `HEAD` is the PR head, or ahead only by this change. If the tree is dirty and you cannot check out, or `HEAD` is neither, stop and ask. Base: `git merge-base HEAD origin/<baseRefName>`.
+- PR: `gh pr view <n> --json baseRefName,headRefOid`. Check out the branch only if the working tree is clean. Confirm `HEAD` is the PR head, or ahead only by this change. Base: `git merge-base HEAD origin/<baseRefName>`.
 - Local: `git merge-base HEAD origin/<default-branch>`. No remote: a base the user names, or `HEAD` for uncommitted changes only.
 
 The change is base to working tree in those paths, with untracked files. Use one diff command in all rounds. State the intent and what is out of scope in one or two sentences. Run the covering checks. If this change breaks one, fix it before you send the review. Then send it, and list missing checks and checks that already failed before this change in the brief.
@@ -107,7 +107,7 @@ Start one only if budget remains and a `BLOCKER` or `SHOULD` is open, behavior c
 - Agreed: the Model approves the current behavior diff, or returns only `NIT` findings on it. No `BLOCKER` or `SHOULD` is open, and you have no concern of your own.
 - Stuck: an item stays disputed after two replies, or the budget ends. Show both sides in two or three lines each. The user decides. The end of the budget is not approval.
 
-Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. A `full-send` or `full-stop` request counts as that ask. If you push to a PR, give `full-comms` this line for the PR body:
+Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. A `full-send` or `full-stop` request counts as that ask. If you push to a PR, add this line to the PR body:
 
 `Reviewed with full-review: <N> rounds with <Model>. Verdict: <APPROVE, or CHANGES with only NIT findings>.`
 
