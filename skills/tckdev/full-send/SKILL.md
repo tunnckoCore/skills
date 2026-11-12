@@ -87,7 +87,9 @@ Full confidence means all of these are true on the latest commit:
 
 - Your proof covers every change in the diff.
 - The `babysit-pr` finish gate passes.
-- Each review finding is fixed, or dismissed with a written reason.
+- Each review finding is fixed, or dismissed with a written reason. A bot note
+  that only asks for human review gets `No change.` and one short reason, as
+  `full-comms` says. That note alone does not block the merge.
 - No human review still requests changes.
 - The PR has no `do-not-merge` label. Never remove it. If it is present, ask the user.
 - The branch is up to date with the default branch, and GitHub reports it as
