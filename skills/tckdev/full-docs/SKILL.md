@@ -16,8 +16,9 @@ The knowledge base tells agents and people what the project does and why, withou
 - **Terms:** `GLOSSARY.md`, or `GLOSSARY-MAP.md` plus one `GLOSSARY.md` per context. Use the `domain-modeling` skill and its format.
 - **Decisions:** ADRs in `docs/adr/`. Use the `domain-modeling` skill and its format. Write one only when the decision is hard to reverse, surprising without context, and the result of a real trade-off.
 - **Architecture, behavior, and test specs:**
-  - If the repo has a `lat.md/` folder, write them there in its format: sections linked with `[[wiki links]]`, links into the code, and `@lat:` comments in the code that link back. Read the repo's lat instructions first. Do not edit files that lat generated.
-  - Otherwise, write them as plain markdown in `docs/`, one topic per file, with lowercase file names.
+  - [lat.md](https://github.com/vercel-labs/lat.md) is a tool: the `lat.md` package and its `lat` CLI keep a knowledge graph of markdown in a `lat.md/` folder. The repo uses it if it has a `lat.md/` folder, lists the `lat.md` or `@lat.md/core` package, or has lat instructions in its agent files.
+  - If the repo uses lat, write them in `lat.md/` in its format: sections linked with `[[wiki links]]`, links into the code, and `@lat:` comments in the code that link back. Read the repo's lat instructions first. Do not edit files that lat generated.
+  - Otherwise, write them as plain markdown in `docs/`, one topic per file, with lowercase file names. In your report, suggest lat.md to the user: it adds linked sections, code backlinks, and a check that the docs match the code.
 
 Create files only when you have something to write.
 
