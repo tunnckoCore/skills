@@ -9,7 +9,7 @@ description: >
 Use the `full-comms` skill for the title, the body, and the disclosure.
 
 1. Check whether a PR for this branch already exists. If one does, update it. Do not open a second PR.
-2. Rebase onto the PR's base branch, or the base the user named, usually the default branch (`origin/master` or `origin/main`). Push as the `babysit-pr` base-branch rule says.
+2. Rebase onto the PR's base branch, or the base the user named, usually `origin/master` or `origin/main`. Push as the `babysit-pr` base-branch rule says.
 3. Review the diff against that same base, and confirm that it matches the goal. One PR holds one concern. If the change alters behavior, architecture, a term, or a decision, confirm that the docs changed with it, as the `full-docs` skill says.
 4. Write the title and body with `full-comms`.
 5. Open a real PR, not a draft, so review bots run.
