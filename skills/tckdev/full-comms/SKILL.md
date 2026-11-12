@@ -1,6 +1,8 @@
 ---
 name: full-comms
-description: The disclosure, writing style, and formats for everything you write on GitHub. Use whenever you write a PR title, PR body, comment, or review reply.
+description: >
+  The disclosure, writing style, and formats for everything you write on GitHub.
+  Use whenever you write a PR title, PR body, comment, or review reply.
 ---
 
 # Full comms

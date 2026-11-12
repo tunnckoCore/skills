@@ -443,7 +443,9 @@ class Watcher:
             was_done = key in self.reported
             if done:
                 failed = [name for name, c in own_checks.items() if c["bucket"] in FAILED]
-                if bot in GATING_BOTS and not failed:
+                passed = any(c["bucket"] == "pass" for c in own_checks.values())
+                evidence = passed or on_head or any(short in s["body"] for s in summaries)
+                if bot in GATING_BOTS and not failed and evidence:
                     reviewed.append(bot)
                 detail = "; ".join(filter(None, [
                     next((v for v in map(verdict, (s["body"] for s in summaries)) if v), ""),
@@ -510,10 +512,10 @@ class Watcher:
             if green and self.until == "green":
                 self.reported.add(checks_key)
                 self.finish(0, [f"green on {short}: {summary}{self.behind(base, base_oid, head)}"])
+            if green and all_done and failed_names:
+                self.finish(1, [f"checks failed on {short}: {', '.join(failed_names)}"])
             # ready waits for Greptile or Macroscope, never for CodeRabbit.
             if green and all_done and reviewed:
-                if failed_names:
-                    self.finish(1, [f"checks failed on {short}: {', '.join(failed_names)}"])
                 if unresolved:
                     self.finish(1, [f"blocked by {len(unresolved)} unresolved threads on {short}: {' '.join(unresolved)}"])
                 if merge_state == "BEHIND":

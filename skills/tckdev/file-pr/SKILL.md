@@ -1,6 +1,7 @@
 ---
 name: file-pr
-description: File a pull request. Use when the user asks to file, open, or create a PR.
+description: >
+  File a pull request. Use when the user asks to file, open, or create a PR.
 ---
 
 # File PR

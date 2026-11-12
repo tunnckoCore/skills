@@ -1,6 +1,7 @@
 ---
 name: full-review
-description: Use when the user says "full review", or "full review with <model>".
+description: >
+  Use when the user says "full review", or "full review with <model>".
 ---
 
 # Full review
@@ -29,7 +30,7 @@ The Model is the reviewer for every round of this run.
 
 ## 1. Scope
 
-Run `git status --short`. Do not stash, discard, or include unrelated changes. Limit the review to the change paths if they separate cleanly. Otherwise stop and ask.
+Run `git status --short`. Do not stash, discard, or include unrelated changes. Limit the review to the change paths if they separate cleanly. Otherwise stop and ask. Docs, the glossary, and ADRs that the change makes out of date are in scope even outside the change paths.
 
 Find the base after `git fetch origin`:
 
@@ -108,7 +109,7 @@ Start one only if budget remains and a `BLOCKER` or `SHOULD` is open, behavior c
 
 Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. If you push to a PR, add this line to the end of the PR body:
 
-`Reviewed with full-review: <N> rounds with <Model>. Verdict: approved.` 
+`Reviewed with full-review: <N> rounds with <Model>. Verdict: <APPROVE, or CHANGES with only NIT findings>.`
 
 Add `on <effort>` only if you verified the effort.
 

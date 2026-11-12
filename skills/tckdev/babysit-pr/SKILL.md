@@ -1,6 +1,8 @@
 ---
 name: babysit-pr
-description: Monitor, fix, and finish an open GitHub pull request. Use when the user asks to monitor, watch, or babysit a PR.
+description: >
+  Monitor, fix, and finish an open GitHub pull request. Use when the user asks to
+  monitor, watch, or babysit a PR.
 ---
 
 # Babysit PR
@@ -42,8 +44,8 @@ pr-wait <pr> [--repo owner/name] [--until ready|green|any-change]
 
 It prints one line per real event. It exits 0 when the `--until` condition is met or the PR merges, 1 when it needs you (a required check failed, conflicts, unresolved threads, PR closed), and 2 on bad input.
 
-- `ready` (default): required checks green, every other CI check passed, a review bot reviewed the head, and no unresolved threads.
-- `green`: required checks only. Use it when the repo has no review bot that `pr-wait` knows.
+- `ready` (default): required checks green, every other CI check passed, Greptile or Macroscope reviewed the head, and no unresolved threads.
+- `green`: required checks only. Use it when the repo has neither Greptile nor Macroscope.
 - `any-change`: exit on the first event.
 
 In Claude Code, run it with the Monitor tool (`timeout_ms: 3600000`), so each line wakes you. This is the only allowed use of Monitor. Start it again after you push, after you handle an exit 1, and after a resume. It remembers what it already reported. If it says another pid already watches the PR, do not start a second one.
@@ -77,7 +79,7 @@ If another PR makes this one obsolete, stop the watcher, report it to the user, 
 
 Babysit never merges. Auto-merge is off on all repos, so nothing merges on its own. Only the `full-send` skill merges, by hand, when its merge gate passes. The `full-stop` skill stops at ready.
 
-A `do-not-merge` label makes a required check fail, so it holds the merge. Never remove it.
+A `do-not-merge` label makes a required check fail, so it holds the merge. Never remove it. While the label is on the PR, run `pr-wait --until any-change`, because the other modes exit on that failed check. Check the finish gate yourself.
 
 ## Finish
 
@@ -92,7 +94,7 @@ The PR is ready only when:
 
 Stop and report once:
 
-- **Ready:** in T3 Code, call `unwatch_pull_request`. Elsewhere, stop the `pr-wait` process if it is still running and ensure it has exited. Report, and end the turn. If the `do-not-merge` label is the only blocker, say so.
+- **Ready:** in T3 Code, call `unwatch_pull_request`. Elsewhere, stop the `pr-wait` process if it is still running and ensure it has exited. Report, and end the turn. If the `do-not-merge` label is the only blocker, say so. When `full-send` runs, do not end the turn: go back to its merge gate.
 - **Merged by someone else:** the watch ends on its own. Report the merge commit.
 - **Idle:** if `full-send` is not running, after one hour without a new event, call `unwatch_pull_request`, report what is still open, and end the turn.
 

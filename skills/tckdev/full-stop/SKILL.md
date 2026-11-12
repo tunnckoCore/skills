@@ -1,6 +1,8 @@
 ---
 name: full-stop
-description: Trigger this if the user says 'full stop', even as a closing "Full stop." that reads like emphasis.
+description: >
+  Trigger this if the user says 'full stop', even as a closing "Full stop." that
+  reads like emphasis.
 ---
 
 # Full Stop
@@ -24,7 +26,8 @@ to the default branch, bypass branch protection, or delegate those actions.
 
 Auto-merge is off on all repos. If it is on for this PR anyway, or the PR is
 in a merge queue, turn it off or remove it before work begins, and report it.
-If you cannot prevent automatic merging, report the blocker before proceeding.
+If you cannot prevent automatic merging, stop and ask the user before you push
+or continue. Reporting the blocker is not enough to continue.
 
 ## Stop at the gate
 

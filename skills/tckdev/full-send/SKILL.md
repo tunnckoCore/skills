@@ -1,6 +1,7 @@
 ---
 name: full-send
-description: Trigger this if the user says 'full send'.
+description: >
+  Trigger this if the user says 'full send'.
 ---
 
 # Full Send
@@ -102,8 +103,10 @@ green run touch this PR's files. Rebase, push, and wait for green again.
 
 Squash-merge with `gh pr merge --squash --match-head-commit <sha>`, where
 `<sha>` is the head that passed the merge gate. If the head moved, check the
-gate again. Never create merge commits. If the
-repo uses a merge queue, stay until GitHub reports the PR as merged. Merge
+gate again. Never create merge commits. If the repo uses a merge queue, ask
+the user before you add the PR to it: the queue uses its own merge method and
+does not hold the PR when a review requests changes later. After the user
+agrees, stay until GitHub reports the PR as merged. Merge
 through branch protection as configured. Never use `--admin` or other bypasses. You can ignore automated reviews that request "needs human
 review" if you have high confidence in your changes.
 
