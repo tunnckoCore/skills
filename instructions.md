@@ -91,6 +91,7 @@
   + For "How does X work", walkthroughs, where code should live: `~/skills/skills/develop/how-it-works/SKILL.md`. 
 - Knowledge base for a repo (docs, glossary, ADRs, lat.md), create or update, and keep it current in PRs. Not README, comments, or user-facing guides: `~/skills/skills/tckdev/full-docs/SKILL.md`.
 - Module boundaries, interfaces, deep modules: `~/skills/skills/tckdev/codebase-design/SKILL.md`.
+- "improve codebase", an architecture review for deepening opportunities: `~/skills/skills/tckdev/improve-codebase/SKILL.md`.
 - Writing skills, prompts, or the agents file: `~/skills/skills/tckdev/writing-for-agents/SKILL.md`.
 - Test-first work, "tdd", "red-green", integration tests: `~/skills/skills/tckdev/tdd/SKILL.md`.
 - Hill climb: `~/skills/skills/tckdev/hill-climb/SKILL.md`. Never use `--here`. Climb on its own `climb/<name>` branch (name it after the PR, like `pr-22`, when it starts on a PR branch). When the climb ends, report the result. Then switch back to the PR branch, and fast-forward it to the climb branch with `git merge --ff-only climb/<name>`. If a fast-forward is not possible, stop and ask the user in this thread.
