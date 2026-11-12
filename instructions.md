@@ -52,7 +52,7 @@
 - No PRs unless asked, never drafts. One concern per PR.
 - Filing a PR: `~/skills/skills/tckdev/file-pr/SKILL.md`.
 - Babysitting or monitoring a PR: `~/skills/skills/tckdev/babysit-pr/SKILL.md`.
-- Anything written on GitHub (PR titles, bodies, comments, review replies, the disclosure): `~/skills/skills/tckdev/full-comms/SKILL.md`.
+- Anything written on GitHub (issues, issue and PR comments, PR titles and bodies, review replies): `~/skills/skills/tckdev/full-comms/SKILL.md`. That includes its disclosure note at the top, also outside the PR skills.
 - "full review", or a review by a named model: `~/skills/skills/tckdev/full-review/SKILL.md`.
 - "full send": `~/skills/skills/tckdev/full-send/SKILL.md`. "full stop": `~/skills/skills/tckdev/full-stop/SKILL.md`.
 - Auto-merge is off on all repos. Only full-send merges. Never remove a `do-not-merge` label.
