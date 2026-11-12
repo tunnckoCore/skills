@@ -1,0 +1,4 @@
+interface:
+  display_name: "Full Docs"
+  short_description: "Keep docs, glossary, and ADRs current"
+  default_prompt: "Use $full-docs to update the knowledge base for this change."

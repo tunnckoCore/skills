@@ -1,0 +1,4 @@
+interface:
+  display_name: "Full Comms"
+  short_description: "Disclosure, style, and formats for GitHub writing"
+  default_prompt: "Use $full-comms for everything you write on GitHub."
