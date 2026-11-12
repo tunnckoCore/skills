@@ -476,7 +476,7 @@ updated: YYYY-MM-DD
 
 ## Prerequisites
 
-[List all tools, languages, and versions needed before `npm install` / `cargo build` / etc.]
+[List all tools, languages, and versions needed before `npm install` / `pnpm install` / `cargo build` / etc.]
 
 ## Local Setup
 

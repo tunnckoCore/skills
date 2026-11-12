@@ -95,7 +95,7 @@ Full confidence means all of these are true on the latest commit:
   `full-comms` says. That note alone does not block the merge.
 - No human review still requests changes.
 - The PR has no `do-not-merge` label. Never remove it. If it is present, ask the user.
-- The branch is up to date with the PR's base branch, usually `origin/master` or `origin/main`, and GitHub reports it as mergeable.
+- The branch is up to date with the PR's base branch, usually the default branch (`origin/master` or `origin/main`), and GitHub reports it as mergeable.
 
 Auto-merge is off on all repos, and the `babysit-pr` and `full-stop` skills
 never merge. Full-send is the only flow that merges, and it merges by hand.
