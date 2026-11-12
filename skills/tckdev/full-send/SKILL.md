@@ -52,8 +52,16 @@ one appears.
 2. **Prove it.** Get proof for every change you made. See "Proof".
 3. **Get feedback.** Run the `code-review` skill once and fix its findings.
    Then run the `review-loop` skill.
-4. **File the PR** with the `file-pr` skill. Add one short line to the PR
-   body that says how you proved the change.
+4. **File the PR** with the `file-pr` skill. Add the proof to the PR body in
+   this format. Say what the proof shows, not which commands ran.
+
+   ```md
+   ## Proof
+
+   - Tests, typecheck, and lint pass.
+   - The CLI output matches the old build on 12 sample inputs.
+   ```
+
 5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI
    failures. Get proof for each fix before you push it. When babysit reports
    ready, held, or idle, do not end the turn. Continue with the next step.
