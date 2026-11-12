@@ -20,6 +20,8 @@ The knowledge base tells agents and people what the project does and why, withou
   - If the repo uses lat, write them in `lat.md/` in its format: sections linked with `[[wiki links]]`, links into the code, and `@lat:` comments in the code that link back. Read the repo's lat instructions first. Do not edit files that lat generated.
   - Otherwise, write them as plain markdown in `docs/`, one topic per file, with lowercase file names. In your report, suggest lat.md to the user: it adds linked sections, code backlinks, and a check that the docs match the code.
 
+In a monorepo, each app or package can have its own `docs/`, `lat.md/`, glossary, and ADRs, in its own folder. Do not put everything in the root. The root holds only what applies to the whole repo.
+
 Create files only when you have something to write.
 
 ## First docs for a repo
