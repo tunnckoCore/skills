@@ -63,7 +63,7 @@ Do NOT propose interfaces yet. After the file is written, ask the user: "Which o
 
 ### 3. Questioning loop
 
-Once the user picks a candidate, question the user through the decisions it needs: constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive. Ask in rounds. Each round asks every question you can ask now, numbered, each with your recommended answer. Find facts yourself. Ask the user only for decisions. Stop when no decision is open, and the user confirms the shared understanding.
+Once the user picks a candidate, question the user through the decisions it needs: constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive. Ask in rounds of 3 to 5 related questions, not one at a time and not all at once. Number each question, and give your recommended answer. Ask first the questions that later ones depend on. Find facts yourself. Ask the user only for decisions. Stop when no decision is open, and the user confirms the shared understanding.
 
 Side effects happen inline as decisions crystallize; use the `domain-modeling` skill to keep the domain model current as you go:
 
