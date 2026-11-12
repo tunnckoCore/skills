@@ -29,7 +29,7 @@ Read before you write:
 2. Map the directories to what each one is responsible for.
 3. Find the stack, the entry points (main files, routes, CLI commands, exported modules), and the architecture style.
 
-Then cover these topics, in the layout above:
+Then cover these topics, in the layout above. Read [references/doc-templates.md](references/doc-templates.md) first, and use its template for each file. A repo with `lat.md/` uses the lat format instead.
 
 - **Always:**
   - `overview.md`: what the project is for, the stack, the architecture style, and the key concepts. Agents read it first.
@@ -51,7 +51,7 @@ A small project needs fewer files. Do not write a file to fill a slot.
 - Document public interfaces and key abstractions, not every function. Skip generated files and dependencies.
 - Keep implementation details out of `GLOSSARY.md`.
 - Do not link from docs to the README.
-- No "Last updated" dates or changes logs. Git has the history.
+- Put the last-updated date in the frontmatter (`updated: YYYY-MM-DD`) and in the `> Last updated:` line. End each file with a `## Changes Log`.
 - Use the `unslop` skill and ASD-STE100 Simplified Technical English.
 
 ## Keep docs current
@@ -59,6 +59,8 @@ A small project needs fewer files. Do not write a file to fill a slot.
 A change that alters behavior, architecture, a term, or a decision updates the knowledge base in the same PR.
 
 - Update only the affected sections. Do not rewrite the rest.
+- In each changed file, update the `updated` date in the frontmatter and in the `> Last updated:` line, and add one line to its Changes Log.
+- Update `docs/index.md` when you add or remove a doc.
 - Remove or fix every reference to a path or symbol that the change moved or deleted.
 - Remove text that describes behavior that no longer exists. Do not mark it as old.
 - ADRs are the exception. Never delete or rewrite an ADR whose decision changed. Mark it `superseded by ADR-NNNN`, and link the new ADR back to it.
@@ -66,6 +68,6 @@ A change that alters behavior, architecture, a term, or a decision updates the k
 
 ## Check before you finish
 
-- Every path and symbol named in the docs exists.
+- Every path and symbol named in the docs exists. Superseded ADRs are exempt: they keep the names they had when they were written.
 - The tree in `structure.md` matches the repo.
 - The index links every doc, and every cross-link resolves.

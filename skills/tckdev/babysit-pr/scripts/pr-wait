@@ -500,7 +500,9 @@ class Watcher:
             f"merge state {merge_state}",
         ]
         summary = "; ".join(p for p in parts if p)
-        checks_key = f"checks:{head}"
+        # The key carries the summary, so a check or merge state change on the
+        # same head is a new event. A removed do-not-merge label wakes any-change.
+        checks_key = f"checks:{head}:{digest(summary)}"
 
         # Decide whether to stop. A green or ready line carries the same summary
         # as the checks line, so it marks that event as reported.
