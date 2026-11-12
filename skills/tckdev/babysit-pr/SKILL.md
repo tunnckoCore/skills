@@ -89,6 +89,7 @@ The PR is ready only when:
 
 - The pushed head matches the verified local head.
 - Every check is green, except the check that the `do-not-merge` label fails.
+- If review bots such as Greptile, Macroscope, or CodeRabbit ran on this head, they have finished, and their findings are fixed or answered.
 - The PR is mergeable.
 - The branch is not BEHIND.
 - No unresolved thread needs work.
