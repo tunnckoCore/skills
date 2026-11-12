@@ -50,7 +50,8 @@ one appears.
    names `hill-climb` ("full send hill climb"), reach the goal with that skill.
    Then continue from "Prove it". The climb report is part of the proof.
 2. **Prove it.** Get proof for every change you made. See "Proof".
-3. **Get feedback.** Use the `full-review` skill to verify changes.
+3. **Get feedback.** Run the `code-review` skill once and fix its findings.
+   Then run the `review-loop` skill.
 4. **File the PR** with the `file-pr` skill. Add one short line to the PR
    body that says how you proved the change.
 5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI

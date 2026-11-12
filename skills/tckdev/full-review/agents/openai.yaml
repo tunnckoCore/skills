@@ -1,4 +1,0 @@
-interface:
-  display_name: "Full Review"
-  short_description: "Review a change in a loop with a second model"
-  default_prompt: "Use $full-review to review this change before filing the PR."

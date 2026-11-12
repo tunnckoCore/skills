@@ -29,7 +29,7 @@ Never write your own watcher, polling loop, `sleep` loop, or `--watch` command. 
 
 Call it and end your turn. T3 Code wakes you when a check fails, the required checks pass, someone comments or reviews, or the branch conflicts.
 
-- **Only the thread that owns the PR watches it.** A delegated child task (a reviewer, a full-review round, any `delegate_task` child) never calls `watch_pull_request`.
+- **Only the thread that owns the PR watches it.** A delegated child task (a reviewer, a review-loop round, any `delegate_task` child) never calls `watch_pull_request`.
 - **A wake is news, not a merge decision.** Check the finish gate yourself.
 - **Unwatch when you hand off.** When you stop, or ask the user a question, call `unwatch_pull_request` first. A merge or close ends the watch on its own.
 - **"Stopped watching, could not read it"** usually means the GitHub rate limit is used up. Run `gh api rate_limit --jq .resources.graphql`. If `remaining` is near 0, wait for `reset` with one background command, then watch again. Never watch again in a tight loop.

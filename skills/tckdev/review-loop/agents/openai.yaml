@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Loop"
+  short_description: "Review a change in a loop with a second model"
+  default_prompt: "Use $review-loop to review this change before filing the PR."

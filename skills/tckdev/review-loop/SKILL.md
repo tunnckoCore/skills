@@ -1,10 +1,10 @@
 ---
-name: full-review
+name: review-loop
 description: >
-  Use when the user says "full review", or "full review with <model>".
+  Use when the user says "review loop", or "review loop with <model>".
 ---
 
-# Full review
+# Review loop
 
 Get a review of your change from a second model, the Model, before you file a PR or after. You start the Model as a reviewer, check its findings, fix the valid ones, and start a new round until it approves or the budget runs out.
 
@@ -15,7 +15,7 @@ Fix only valid findings, each with the smallest change. Watch for scope creep, a
 The Model is the reviewer for every round of this run.
 
 - Default: the newest Grok Fast model in the T3 catalog, at high reasoning effort, using T3Code Grok Build provider.
-- If the user names a model, for example "full review with Opus 5.5", that model is the Model. Use the effort the user names, else the model's default.
+- If the user names a model, for example "review loop with Opus 5.5", that model is the Model. Use the effort the user names, else the model's default.
 - Call `orchestrator_capabilities` once and pick the Model from it. Do not hardcode an ID.
 - If no route runs the Model, report the blocker. Do not substitute another model.
 - Record the provider, model, and effort only when the catalog shows them.
@@ -109,7 +109,7 @@ Start one only if budget remains and a `BLOCKER` or `SHOULD` is open, behavior c
 
 Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. A `full-send` or `full-stop` request counts as that ask. If you push to a PR, add this line to the PR body:
 
-`Reviewed with full-review: <N> rounds with <Model>. Verdict: <APPROVE, or CHANGES with only NIT findings>.`
+`Reviewed with review-loop: <N> rounds with <Model>. Verdict: <APPROVE, or CHANGES with only NIT findings>.`
 
 Add `on <effort>` only if you verified the effort.
 
