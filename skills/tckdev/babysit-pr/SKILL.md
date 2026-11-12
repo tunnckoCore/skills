@@ -89,7 +89,6 @@ The PR is ready only when:
 
 - The pushed head matches the verified local head.
 - Every check is green, except the check that the `do-not-merge` label fails.
-- Greptile or Macroscope has reviewed this head, when the repo uses one. CodeRabbit does not gate this.
 - The PR is mergeable.
 - The branch is not BEHIND.
 - No unresolved thread needs work.
