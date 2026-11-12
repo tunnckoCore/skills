@@ -4,7 +4,8 @@ description: >
   Write and keep current a repo's knowledge base for agents and people: the docs,
   the glossary, and the ADRs. Use when you document a codebase, update docs after
   a change, or when a change alters behavior, architecture, a term, or a decision.
-  Not for README files, code comments, API references, or user-facing guides.
+  Writes `api.md` for agents when the project has an API. Not for README files,
+  code comments, or user-facing guides.
 ---
 
 # Full docs
@@ -35,7 +36,7 @@ Read before you write:
 Then cover these topics, in the layout above. Read [references/doc-templates.md](references/doc-templates.md) first, and use its template for each file. A repo with `lat.md/` uses the lat format instead.
 
 - **Always:**
-  - `overview.md`: what the project is for, the stack, the architecture style, and the key concepts. Agents read it first.
+  - `overview.md`: what the project is for, the stack, the architecture style, and the key concepts. Name each concept and link to its `GLOSSARY.md` entry, which owns the definition. Agents read this file first.
   - `structure.md`: the directory tree, with what lives where and why.
   - `architecture.md`: how the parts connect, the data flow, and the key abstractions.
 - **Only when the project has them:** `data-model.md`, `api.md`, `configuration.md`, `patterns.md`, `deployment.md`, `development.md`.
@@ -54,7 +55,7 @@ A small project needs fewer files. Do not write a file to fill a slot.
 - Document public interfaces and key abstractions, not every function. Skip generated files and dependencies.
 - Keep implementation details out of `GLOSSARY.md`.
 - Do not link from docs to the README.
-- Put the last-updated date in the frontmatter (`updated: YYYY-MM-DD`) and in the `> Last updated:` line. End each file with a `## Changes Log`.
+- In each `docs/` file, put the last-updated date in the frontmatter (`updated: YYYY-MM-DD`) and in the `> Last updated:` line, and end the file with a `## Changes Log`. The glossary, ADRs, and `lat.md/` pages keep their own formats.
 - Use the `unslop` skill and ASD-STE100 Simplified Technical English.
 
 ## Keep docs current
@@ -62,7 +63,7 @@ A small project needs fewer files. Do not write a file to fill a slot.
 A change that alters behavior, architecture, a term, or a decision updates the knowledge base in the same PR.
 
 - Update only the affected sections. Do not rewrite the rest.
-- In each changed file, update the `updated` date in the frontmatter and in the `> Last updated:` line, and add one line to its Changes Log.
+- In each changed `docs/` file, update the `updated` date in the frontmatter and in the `> Last updated:` line, and add one line to its Changes Log.
 - Update `docs/index.md` when you add or remove a doc.
 - Remove or fix every reference to a path or symbol that the change moved or deleted.
 - Remove text that describes behavior that no longer exists. Do not mark it as old.

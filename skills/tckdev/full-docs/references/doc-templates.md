@@ -33,9 +33,9 @@ updated: YYYY-MM-DD
 
 ## Key Concepts
 
-[Define the 3-7 most important domain concepts an agent needs to understand. These are the nouns and verbs of the system.]
+[Name the 3-7 most important domain concepts. Define them in `GLOSSARY.md`, not here.]
 
-- **[Concept]**: [Definition and role in the system]
+- **[Concept]**: [its role in one line]. See [GLOSSARY.md](../GLOSSARY.md).
 
 ## Entry Points
 

@@ -49,11 +49,11 @@ one appears.
    Update the docs with the `full-docs` skill.
 2. **Prove it.** Get proof for every change you made. See "Proof".
 3. **Get feedback.** Use the `full-review` skill to verify changes.
-4. **File the PR** with the `file-pr` skill. Rebase onto the latest default
-   branch first. Add one short line to the description that says how you proved
-   the change.
+4. **File the PR** with the `file-pr` skill. Give `full-comms` one short line
+   that says how you proved the change, for the PR body.
 5. **Babysit the PR** with the `babysit-pr` skill. Fix real findings and CI
-   failures. Get proof for each fix before you push it.
+   failures. Get proof for each fix before you push it. When babysit reports
+   ready, held, or idle, do not end the turn. Continue with the next step.
 6. **Merge** when the merge gate passes.
 7. **Report** in your final message: the PR link, the merge commit, your proof,
    and each decision you made for the user.
@@ -86,13 +86,12 @@ Ask the user.
 Full confidence means all of these are true on the latest commit:
 
 - Your proof covers every change in the diff.
-- Required checks are green.
-- Review bots have finished, and each finding is fixed or dismissed with a
-  written reason.
+- The `babysit-pr` finish gate passes.
+- Each review finding is fixed, or dismissed with a written reason. A bot note
+  that only asks for human review gets `No change.` and one short reason, as
+  `full-comms` says. That note alone does not block the merge.
 - No human review still requests changes.
 - The PR has no `do-not-merge` label. Never remove it. If it is present, ask the user.
-- The branch is up to date with the default branch, and GitHub reports it as
-  mergeable.
 
 Auto-merge is off on all repos, and the `babysit-pr` and `full-stop` skills
 never merge. Full-send is the only flow that merges, and it merges by hand.
@@ -101,14 +100,16 @@ Right before the merge, run `git fetch` and check the PR again. Never merge
 when it is BEHIND or DIRTY, or when base commits that landed after the last
 green run touch this PR's files. Rebase, push, and wait for green again.
 
+If the base branch uses a merge queue, ask the user before you run
+`gh pr merge`. On such a base, that command adds the PR to the queue, which
+uses its own merge method and does not hold the PR when a review requests
+changes later.
+
 Squash-merge with `gh pr merge --squash --match-head-commit <sha>`, where
 `<sha>` is the head that passed the merge gate. If the head moved, check the
-gate again. Never create merge commits. If the repo uses a merge queue, ask
-the user before you add the PR to it: the queue uses its own merge method and
-does not hold the PR when a review requests changes later. After the user
-agrees, stay until GitHub reports the PR as merged. Merge
-through branch protection as configured. Never use `--admin` or other bypasses. You can ignore automated reviews that request "needs human
-review" if you have high confidence in your changes.
+gate again. Never create merge commits. Stay until GitHub reports the PR as
+merged. Merge through branch protection as configured. Never use `--admin` or
+other bypasses.
 
 ## Asking the user
 

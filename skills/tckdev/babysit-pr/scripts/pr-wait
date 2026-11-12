@@ -28,8 +28,9 @@ Exit codes
 Events
   - a required check failed (name and link)
   - all checks finished on the head (one summary line)
-  - a new comment, review, thread, or thread reply from someone other than the
-    PR author or the gh user
+  - a new comment, review, thread, or thread reply. Text from the PR author or
+    the gh user counts too, unless it starts with the full-comms disclosure
+    note (`> [!NOTE]`), which marks the agent's own posts
   - Greptile, Macroscope, or CodeRabbit finished on the head, or a Greptile or
     Macroscope summary changed after that
   - the base branch moved and the new commits touch files in this PR
@@ -155,6 +156,11 @@ def bot_name(text: str | None) -> str | None:
 def who(node: Json) -> tuple[str, bool]:
     author = node.get("author") or {}
     return author.get("login") or "ghost", author.get("__typename") == "Bot"
+
+
+def agent_post(body: str | None) -> bool:
+    """The agent's own posts start with the full-comms disclosure note."""
+    return (body or "").lstrip().startswith("> [!NOTE]")
 
 
 def plain(body: str) -> str:
@@ -393,12 +399,12 @@ class Watcher:
         # People and bots talking. Edits are never events.
         for comment in comments:
             login, is_bot = who(comment)
-            if login in mine or bot_name(login) or (is_bot and any(b in login for b in STATUS_BOTS)):
+            if (login in mine and agent_post(comment["body"])) or bot_name(login) or (is_bot and any(b in login for b in STATUS_BOTS)):
                 continue
             self.emit(f"c:{comment['id']}", f"comment from {login}: {snippet(comment['body'])} {comment['url']}")
         for review in reviews:
             login, is_bot = who(review)
-            if login in mine or is_bot:
+            if (login in mine and agent_post(review["body"])) or is_bot:
                 continue
             if review["state"] in ("APPROVED", "CHANGES_REQUESTED") or review["body"].strip():
                 state = review["state"].lower().replace("_", " ")
@@ -411,7 +417,7 @@ class Watcher:
             where = f"{thread['path']}:{thread['line']}" if thread["line"] else thread["path"]
             for index, comment in enumerate(nodes):
                 login, _ = who(comment)
-                if login in mine:
+                if login in mine and agent_post(comment["body"]):
                     continue
                 kind = "new thread" if index == 0 else "thread reply"
                 self.emit(f"c:{comment['id']}", f"{kind} from {login} on {where}: {snippet(comment['body'])} {comment['url']}")
