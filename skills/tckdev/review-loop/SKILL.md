@@ -107,9 +107,15 @@ Start one only if budget remains and a `BLOCKER` or `SHOULD` is open, behavior c
 - Agreed: the Model approves the current behavior diff, or returns only `NIT` findings on it. No `BLOCKER` or `SHOULD` is open, and you have no concern of your own.
 - Stuck: an item stays disputed after two replies, or the budget ends. Show both sides in two or three lines each. The user decides. The end of the budget is not approval.
 
-Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. A `full-send` or `full-stop` request counts as that ask. If you push to a PR, add this line to the PR body:
+Do not push during the loop. Push after agreement only if the user asked to push, ship, or update the PR. A `full-send` or `full-stop` request counts as that ask. If you push to a PR, add this to the PR body. Use the alert that matches the verdict:
 
-`Reviewed with review-loop: <N> rounds with <Model>. Verdict: <APPROVE, or CHANGES with only NIT findings>.`
+```md
+> [!TIP]
+> Reviewed with review-loop: <N> rounds with <Model>. Verdict: APPROVE.
+```
+
+- Only `NIT` findings: `[!NOTE]`, with `Verdict: CHANGES, only NIT findings.`
+- Stuck or out of budget, and the user chose to ship: `[!CAUTION]`, with `Verdict: no agreement, <open ids>.`
 
 Add `on <effort>` only if you verified the effort.
 
