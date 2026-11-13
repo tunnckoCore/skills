@@ -67,6 +67,7 @@
 - Use the exact repo commands the user or docs gave. No substitutes, filters, or extra checks.
 - Built-in tools first, then bash with `sed`/`awk`. `rg` over `grep`, `fd` over `find`.
 - NEVER USE PYTHON, PERL OR ANYTHING IF THERE IS A BUILT-IN TOOL. OR JUST USE STANDARD UNIX TOOLS AND BASH!
+- A prompt for another thread or agent (`t3_thread_launch`, `t3_thread_send`, `delegate_task`): the skill trigger and the task context only. Do not restate these instructions or skill rules, link or name skill files, or list commands to run. The other agent loads all of that itself. A skill that defines its own brief, like review-loop, wins.
 - Max 3 subagents, no grandchildren. No workflows for scaffolds or simple tasks. Never re-launch a workflow the user killed. No long silent tool loops.
 - Told to stop a subagent: `TaskStop` it. If it fails with "not running"/"no task found" but T3 still shows it Running, the T3 row is stale: `SendMessage` it `Reply with just "done", no tool calls.`, then `TaskStop` again.
 - Don't `SendMessage` a running subagent unless needed; a queued mid-run message can leave T3 showing it Running after it finishes.
