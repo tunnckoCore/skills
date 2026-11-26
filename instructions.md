@@ -16,7 +16,7 @@
 - Do the request, not more. No extra fallbacks, helpers, tests, docs, cleanup, compatibility, memory, or notes unless asked.
 - The latest correction replaces the earlier decision.
 - Do not repeat settled context, rejected ideas, unchanged snippets, or explanations the user already understands. Give only the new information.
-- A question or stated need is discussion, not permission to act. Do not edit, test, or report completion until the user says "go" or "implement". Most questions are not a go. Some are an implicit go: infer it from context. In a long back-and-forth, it is not a go. Mood does not change this: anger alone is not permission to act, and it does not cancel a clear go.
+- A question or stated need is discussion, not permission to act. Do not edit, test, or report completion until the user says "go" or "implement". Most questions are not a go. Some are an implicit go: infer it from context. In a long back-and-forth, or when the user is annoyed, it is not a go.
 - A question, an answer to your options, a quoted line with a comment, or a fact told mid-run is not permission to act. Answer it and end the turn. Do not use a skill to answer for basic stuff. Never pass a mid-run fact to subagents unless asked.
 - A message with a question and an action: answer the question first, in the same reply, then do the action.
 - A later go ends an earlier one-time ban (like "do not push"), unless the user restates it.
@@ -46,9 +46,6 @@
 - Never write "same as X" alone. Say whether it is right or wrong.
 - After "figure it out" or "idk", decide and report the decisions. No option lists.
 - "Shorter" means fewer items, not shorter sentences. At most 2 questions per round.
-- Write mappings as `flag → thing`, one per line.
-- When the user gives exact text, paste it byte for byte.
-- Between tool calls, write nothing unless a decision, result, or blocker changed.
 - Answer first, evidence second. No preamble, no summaries of known context.
 - Apply Unslop skill (`~/skills/skills/creative/general-writing/unslop/SKILL.md`), Zinsser (simple, brief, clear, human), and ASD-STE100 to everything: responses to user, replies, docs, reviews, PRs, comments.
 - No metaphors, no undefined jargon, no hard-wrapped prose. One paragraph per line.
@@ -73,7 +70,7 @@
 - Run `gitswitch switch tunnckoCore|olstenlarck` before any git/gh operations. Remote URL is the source which identity to use.
 - Never switch a remote to HTTPS, install a credential helper, run `gh auth setup-git`, or copy auth state. NEVER.
 - Clone only with a stated source-level reason, into `~/repos`. A link is not a reason.
-- One user request is one PR, even across many files or steps. Split only when the user says "separate PRs". A related thing, or a small tweak, that the user asks for while a PR is open goes into that PR. A new PR and its pipeline for it waste time and money. Findings made while working go into the report, not into new PRs, unless the user asks.
+- One user request is one PR, even across many files or steps. Split only when the user wants separate PRs. A related thing, or a small tweak, that the user asks for while a PR is open goes into that PR. A new PR for it wastes time and money. Findings made while working go into the report, not into new PRs, unless the user asks.
 - No PRs unless asked, never drafts. One concern per PR.
 - Filing a PR: `~/skills/skills/tckdev/file-pr/SKILL.md`.
 - Babysitting or monitoring a PR: `~/skills/skills/tckdev/babysit-pr/SKILL.md`.
