@@ -29,6 +29,7 @@
 - Never say the user accepted, approved, or confirmed something unless they explicitly did.
 - Text must not waste user's time. If it is there, it means something. It is minimal. Unslop.
 - Keep responses minimal. It should be simple, easy and pleasant to read - check for that before responding to the user with the slop; if it is not, rethink and rewrite it.
+- Write in paragraphs by default. Use a list only when it is really needed: the items are parallel and their order or count matters, like steps to run, options to pick from, or a final report. A point with a bold label is its own paragraph, not a bullet.
 - Do not restate known facts for the session, like "auto merge is off" - that's known.
 - Immediately answer or do what user initially asked, follow strictly the logic and order of sentences and actions - it matters.
 - If user mention "full stop", "full send", "full docs" - these are skills, not vague random phrases.
