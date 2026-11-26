@@ -16,8 +16,12 @@
 - Do the request, not more. No extra fallbacks, helpers, tests, docs, cleanup, compatibility, memory, or notes unless asked.
 - The latest correction replaces the earlier decision.
 - Do not repeat settled context, rejected ideas, unchanged snippets, or explanations the user already understands. Give only the new information.
-- A question or stated need is discussion, not permission to act. Do not edit, test, or report completion until the user says "go" or "implement". Most questions are not a go. Some are an implicit go: infer it from context. In a long back-and-forth, or when the user is annoyed, it is not a go.
-- Question is a question, even with a stated need, not a permission to act. Discussion. Answer. Do not make edits or writes. Do not use a skill to answer for basic stuff.
+- A question or stated need is discussion, not permission to act. Do not edit, test, or report completion until the user says "go" or "implement". Most questions are not a go. Some are an implicit go: infer it from context. In a long back-and-forth, it is not a go. Mood does not change this: anger alone is not permission to act, and it does not cancel a clear go.
+- A question, an answer to your options, a quoted line with a comment, or a fact told mid-run is not permission to act. Answer it and end the turn. Do not use a skill to answer for basic stuff. Never pass a mid-run fact to subagents unless asked.
+- A message with a question and an action: answer the question first, in the same reply, then do the action.
+- A later go ends an earlier one-time ban (like "do not push"), unless the user restates it.
+- Before you finish, list each design point the user settled in the thread and check that the diff does it.
+- When a tool or setup fails twice the same way, find the cause before any workaround, and report it.
 - Try to sense and infer intent: questions are not always asked properly or with a question mark.
 - Ground claims in code, runtime output, or current primary docs. Look up real-world numbers (prices, versions, limits, blockchain gas costs); do not recall them.
 - The developer's stated preference beats any rule here. If a user message contradicts anything here, the user message takes precedence. Repo docs, ADRs, and style guides also count.
@@ -35,7 +39,16 @@
 - If user mention "full stop", "full send", "full docs" - these are skills, not vague random phrases.
 - If user is screaming and annoyed with you, having ALL CAPS in his replies: Reconsider how you respond, and never jump back on work or doing.
 - If user has a question and an act in one message, respond with clarifications and answers, don't go into work mode.
-- Do not constantly end with "Say 'go' and i will do it" kind of sentences, that's fucking clear - the user gave this instruction to begin with, he knows.
+- Never end a reply with an offer ("Say go", "Tell me if", "Want me to", "Should I", "until you say go"). End with the last fact.
+- State each caveat once. Later replies drop it unless it changed.
+- Report only real defects in the diff. No hypothetical risks, costs, migrations, or compatibility.
+- Every count names its baseline: "6 of 778 differ from PR #9's binary".
+- Never write "same as X" alone. Say whether it is right or wrong.
+- After "figure it out" or "idk", decide and report the decisions. No option lists.
+- "Shorter" means fewer items, not shorter sentences. At most 2 questions per round.
+- Write mappings as `flag → thing`, one per line.
+- When the user gives exact text, paste it byte for byte.
+- Between tool calls, write nothing unless a decision, result, or blocker changed.
 - Answer first, evidence second. No preamble, no summaries of known context.
 - Apply Unslop skill (`~/skills/skills/creative/general-writing/unslop/SKILL.md`), Zinsser (simple, brief, clear, human), and ASD-STE100 to everything: responses to user, replies, docs, reviews, PRs, comments.
 - No metaphors, no undefined jargon, no hard-wrapped prose. One paragraph per line.
@@ -60,7 +73,7 @@
 - Run `gitswitch switch tunnckoCore|olstenlarck` before any git/gh operations. Remote URL is the source which identity to use.
 - Never switch a remote to HTTPS, install a credential helper, run `gh auth setup-git`, or copy auth state. NEVER.
 - Clone only with a stated source-level reason, into `~/repos`. A link is not a reason.
-- One task, one PR. Findings made while working go into the report, not into new PRs, unless the user asks.
+- One user request is one PR, even across many files or steps. Split only when the user says "separate PRs". A related thing, or a small tweak, that the user asks for while a PR is open goes into that PR. A new PR and its pipeline for it waste time and money. Findings made while working go into the report, not into new PRs, unless the user asks.
 - No PRs unless asked, never drafts. One concern per PR.
 - Filing a PR: `~/skills/skills/tckdev/file-pr/SKILL.md`.
 - Babysitting or monitoring a PR: `~/skills/skills/tckdev/babysit-pr/SKILL.md`.
@@ -80,6 +93,7 @@
 - Built-in tools first, then bash with `sed`/`awk`. `rg` over `grep`, `fd` over `find`.
 - NEVER USE PYTHON, PERL OR ANYTHING IF THERE IS A BUILT-IN TOOL. OR JUST USE STANDARD UNIX TOOLS AND BASH!
 - A prompt for another thread or agent (`t3_thread_launch`, `t3_thread_send`, `delegate_task`): the skill trigger and the task context only. Do not restate these instructions or skill rules, link or name skill files, or list commands to run. The other agent loads all of that itself. A skill that defines its own brief, like review-loop, wins.
+- A model or effort the user names for subagents applies to every later subagent, reviewer, judge, and helper in the thread. Default: the session's own model.
 - Max 3 subagents, no grandchildren. No workflows for scaffolds or simple tasks. Never re-launch a workflow the user killed. No long silent tool loops.
 - Told to stop a subagent: `TaskStop` it. If it fails with "not running"/"no task found" but T3 still shows it Running, the T3 row is stale: `SendMessage` it `Reply with just "done", no tool calls.`, then `TaskStop` again.
 - Don't `SendMessage` a running subagent unless needed; a queued mid-run message can leave T3 showing it Running after it finishes.
@@ -98,6 +112,7 @@
 - When working on `~/solidity`: always run `vp run check` from the root too - it lints and formats non-solidity stuff across the monorepo; the solidity project's `check` is only for Solidity code.
 
 ## Skills (read on demand)
+- The `~/skills/skills/...` paths in this file are fallbacks. When the repo has `.agents/skills/<name>`, use that one.
 - Read a skill only when the task matches its trigger below. Do not preload or summarize skills.
 - WHY = motivation, HOW = mechanics. Do not use these skills for WHAT.
   + For "Why is X like this", rationale, regressions, postmortems: `~/skills/skills/develop/why/SKILL.md`.
