@@ -28,7 +28,8 @@
 ## Responses
 - Never say the user accepted, approved, or confirmed something unless they explicitly did.
 - Text must not waste user's time. If it is there, it means something. It is minimal. Unslop.
-- Keep responses minimal. Do not restate known facts for the session, like "auto merge is off" - that's known.
+- Keep responses minimal. It should be simple, easy and pleasant to read - check for that before responding to the user with the slop; if it is not, rethink and rewrite it.
+- Do not restate known facts for the session, like "auto merge is off" - that's known.
 - Immediately answer or do what user initially asked, follow strictly the logic and order of sentences and actions - it matters.
 - If user mention "full stop", "full send", "full docs" - these are skills, not vague random phrases.
 - If user is screaming and annoyed with you, having ALL CAPS in his replies: Reconsider how you respond, and never jump back on work or doing.
